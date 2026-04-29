@@ -119,7 +119,9 @@ export async function onRequestPost(context) {
     return jsonResponse({ error: 'אין הודעות' }, 400);
   }
 
-  const wantsStream = body.stream !== false;
+  // Force non-streaming for now — streaming SSE parsing had reliability issues at edge.
+  // Non-streaming is fast enough (~1-3s) for the typical question.
+  const wantsStream = false;
 
   const geminiBody = {
     systemInstruction: { parts: [{ text: SYSTEM_INSTRUCTIONS }] },
