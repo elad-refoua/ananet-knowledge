@@ -338,13 +338,31 @@ tailwind.config = {
 
         <h4>🤖 הבוט — איזה מודל זה?</h4>
         <ul>
-          <li><strong>מודל</strong>: <code>gemini-2.5-flash</code> של Google</li>
+          <li><strong>מודל</strong>: <code>gemini-2.5-flash-lite</code> ראשון, fallback ל-<code>gemini-2.5-flash</code> ול-<code>gemini-flash-latest</code></li>
           <li><strong>שכבת חינמית (Free Tier)</strong> — 0 ש"ח עלות</li>
           <li><strong>מגבלות יומיות</strong>: 250 בקשות ביום, 10 לדקה, 250,000 טוקנים לדקה</li>
-          <li><strong>מאגר ידע מובנה בפרומפט</strong>: 50 KB טקסט מובנה (כל קבצי ה-reference + help)</li>
-          <li><strong>הקשר</strong>: עד 1,048,576 טוקנים — מספיק לכל המאגר + הצ'אט שלך</li>
+          <li><strong>הקשר</strong>: עד 1,048,576 טוקנים</li>
           <li><strong>API endpoint</strong>: Cloudflare Pages Function (`/api/chat`) → Google AI</li>
         </ul>
+
+        <h4>🤖 10 בוטים — אחד כללי + 9 מומחים</h4>
+        <p>כל בוט יושב על תת-מאגר ספציפי כדי לתת תשובות מדויקות וממוקדות. החלפת בוט — לחיצה על שם הבוט בראש הצ'אט.</p>
+        <table>
+          <thead><tr><th>בוט</th><th>על מה הוא יודע</th><th>גודל המאגר</th></tr></thead>
+          <tbody>
+            <tr><td>🤖 בוט עננט הכללי</td><td>כל הנושאים — workflows, מלגות, חומ"ס, חו"ל, היסעים, מחקר</td><td>49 KB</td></tr>
+            <tr><td>🧪 חומ"ס</td><td>חומרים מסוכנים, מסך דיווח, קודי מעבדה, SDS</td><td>22 KB</td></tr>
+            <tr><td>🛒 רכש מקומי</td><td>רכש מקומי, מחירון, מלאי</td><td>27 KB</td></tr>
+            <tr><td>🌍 רכש חו"ל</td><td>יבוא ויצוא טובין מחו"ל</td><td>18 KB</td></tr>
+            <tr><td>💳 תשלומים לחו"ל</td><td>אשראי + העברה בנקאית ללא משלוח</td><td>24 KB</td></tr>
+            <tr><td>🎓 מלגות</td><td>הקמה, ביטול, שינוי, דדליינים</td><td>24 KB</td></tr>
+            <tr><td>💸 החזר הוצאות</td><td>הגשה, מעקב, פתרון בעיות</td><td>15 KB</td></tr>
+            <tr><td>🚌 היסעים</td><td>אוטובוסים, מוניות, השכרת רכב</td><td>5 KB</td></tr>
+            <tr><td>🏗️ פנימי / בינוי</td><td>רכש פנימי, בירא, בינו, תפעול</td><td>7 KB</td></tr>
+            <tr><td>🔬 רשות מחקר</td><td>הדוח לחוקר, קדם מחקר, תקציבי grants</td><td>42 KB</td></tr>
+          </tbody>
+        </table>
+        <p><strong>בוטים מומחים מסרבים לענות מחוץ לתחומם</strong> — ומפנים לבוט הכללי או לבוט מומחה אחר. זה מונע הזיות ומגביר אמון.</p>
 
         <h4>🏗️ ארכיטקטורה</h4>
         <pre style="background: #f1f5f9; padding: 1rem; border-radius: 0.5rem; font-size: 0.85em; direction: ltr; text-align: left;">User browser
@@ -433,17 +451,17 @@ Response back to user</pre>
 <!-- Bottom chat sheet (mobile + desktop) -->
 <div id="chat-sheet" class="chat-sheet hidden">
   <div id="chat-panel" class="bg-white w-full md:w-full md:max-w-2xl rounded-t-3xl md:rounded-3xl shadow-2xl flex flex-col" style="height: 85vh">
-    <div class="flex items-center justify-between p-4 border-b border-slate-200">
-      <div class="flex items-center gap-2">
-        <span class="text-2xl">🤖</span>
-        <div>
-          <h3 class="font-bold">בוט עננט</h3>
-          <p id="chat-status" class="text-xs text-slate-500">שיחה חדשה</p>
+    <div class="flex items-center justify-between p-3 border-b border-slate-200 gap-2">
+      <button id="topic-selector" class="flex items-center gap-2 hover:bg-slate-100 rounded-lg px-2 py-1.5 transition flex-1 min-w-0" aria-label="בחר בוט">
+        <span id="topic-icon" class="text-2xl flex-shrink-0">🤖</span>
+        <div class="text-right min-w-0 flex-1">
+          <h3 id="topic-title" class="font-bold truncate">בוט עננט הכללי</h3>
+          <p id="chat-status" class="text-xs text-slate-500 truncate">שיחה חדשה · החלף בוט ▾</p>
         </div>
-      </div>
-      <div class="flex items-center gap-2">
-        <button id="chat-clear" title="התחל שיחה חדשה (יאפס את ההיסטוריה)" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-lg flex items-center gap-1 transition">
-          🔄 שיחה חדשה
+      </button>
+      <div class="flex items-center gap-1 flex-shrink-0">
+        <button id="chat-clear" title="התחל שיחה חדשה" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-2 py-1.5 rounded-lg flex items-center gap-1 transition">
+          🔄
         </button>
         <button id="chat-close" class="text-2xl text-slate-400 hover:text-slate-600 w-8 h-8 flex items-center justify-center" aria-label="סגור">×</button>
       </div>
@@ -461,6 +479,21 @@ Response back to user</pre>
       >
       <button type="submit" class="bg-primary-600 hover:bg-primary-700 text-white px-5 py-3 rounded-xl font-semibold transition" aria-label="שלח">שלח</button>
     </form>
+  </div>
+</div>
+
+<!-- Topic picker modal -->
+<div id="topic-picker-modal" class="topic-picker-modal hidden">
+  <div class="bg-white max-w-2xl w-full rounded-3xl p-5 md:p-6 shadow-2xl max-h-[85vh] overflow-y-auto">
+    <div class="flex items-center justify-between mb-4">
+      <div>
+        <h2 class="text-xl md:text-2xl font-bold">בחר בוט</h2>
+        <p class="text-sm text-slate-600 mt-1">כל בוט יודע על תחום ספציפי. הכללי יודע על הכל.</p>
+      </div>
+      <button id="topic-picker-close" class="text-3xl text-slate-400 hover:text-slate-600 w-10 h-10 flex items-center justify-center" aria-label="סגור">×</button>
+    </div>
+    <div id="topic-picker-list" class="grid grid-cols-1 md:grid-cols-2 gap-2"></div>
+    <p class="text-xs text-slate-500 mt-4 text-center">החלפת בוט תאפס את השיחה הנוכחית.</p>
   </div>
 </div>
 

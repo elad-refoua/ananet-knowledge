@@ -1,17 +1,136 @@
 // Ananet Knowledge - main app
-// Hash router + Workflow Finder + Buyer Finder + Browse + Streaming Chat
+// Hash router + Workflow Finder + Buyer Finder + Browse + Topic-aware Chat
 
 const BOT_ENDPOINT = '/api/chat';
 const GITHUB_BASE = 'https://github.com/elad-refoua/ananet-knowledge';
 
-const SUGGESTED_QUESTIONS = [
-  'מי הקניין של מחשבים?',
-  'איך מקימים דרישת חומ"ס?',
-  'מתי הדדליין לביטול מלגות?',
-  'מה ההבדל בין יבוא לקניה ללא יבוא?',
-  'ספי הצעות מחיר',
-  'איך מבטלים דרישה?',
-];
+// === Topic registry ===
+// Mirrors functions/api/_kb.js TOPICS_META — kept here for client-side UI.
+const TOPICS = {
+  general: {
+    title: 'בוט עננט הכללי',
+    short: 'כללי',
+    description: 'יודע על כל הנושאים — workflows, מלגות, חומ"ס, חו"ל, היסעים, ועוד',
+    icon: '🤖',
+  },
+  hazmat: {
+    title: 'בוט חומ"ס המומחה',
+    short: 'חומ"ס',
+    description: 'מומחה ברכישת חומרים מסוכנים, מסך דיווח למעבדה, קודי מעבדה, SDS',
+    icon: '🧪',
+  },
+  'local-purchase': {
+    title: 'בוט רכש מקומי המומחה',
+    short: 'רכש מקומי',
+    description: 'רכש מקומי, מחירון, מלאי מהמחסן הראשי',
+    icon: '🛒',
+  },
+  foreign: {
+    title: 'בוט רכש חו"ל המומחה',
+    short: 'חו"ל',
+    description: 'יבוא ויצוא טובין מחו"ל (עם משלוח פיזי)',
+    icon: '🌍',
+  },
+  'credit-card': {
+    title: 'בוט תשלומים לחו"ל המומחה',
+    short: 'תשלומי חו"ל',
+    description: 'אשראי + העברה בנקאית לחו"ל ללא משלוח פיזי',
+    icon: '💳',
+  },
+  scholarships: {
+    title: 'בוט מלגות המומחה',
+    short: 'מלגות',
+    description: 'הקמה, ביטול, שינוי, ודדליינים של מלגות',
+    icon: '🎓',
+  },
+  expense: {
+    title: 'בוט החזר הוצאות המומחה',
+    short: 'החזר הוצאות',
+    description: 'הגשה, מעקב, ופתרון בעיות בהחזרי הוצאות',
+    icon: '💸',
+  },
+  transport: {
+    title: 'בוט היסעים המומחה',
+    short: 'היסעים',
+    description: 'אוטובוסים, מוניות, השכרת רכב, ושינוע',
+    icon: '🚌',
+  },
+  internal: {
+    title: 'בוט רכש פנימי / בינוי המומחה',
+    short: 'פנימי / בינוי',
+    description: 'רכש פנימי, בירא, בינו, ושירותי תפעול',
+    icon: '🏗️',
+  },
+  research: {
+    title: 'בוט רשות מחקר המומחה',
+    short: 'רשות מחקר',
+    description: 'הדוח לחוקר, קדם מחקר, תקציבי grants, encumbrances',
+    icon: '🔬',
+  },
+};
+
+const SUGGESTED_QUESTIONS = {
+  general: [
+    'מי הקניין של מחשבים?',
+    'איך מקימים דרישת חומ"ס?',
+    'דדליין מלגות?',
+    'ספי הצעות מחיר',
+  ],
+  hazmat: [
+    'איך מקימים דרישת חומ"ס?',
+    'מה זה מסך דיווח למעבדה?',
+    'איך מבטלים שגיאת חריגה?',
+    'מה לעשות אם המק"ט לא קיים?',
+  ],
+  'local-purchase': [
+    'איך מקימים דרישת רכש מקומי?',
+    'מה ההבדל בין מחירון לרכש מקומי?',
+    'איך מזמינים מהמחסן הראשי?',
+    'מי הקניין של ריהוט?',
+  ],
+  foreign: [
+    'איך מקימים דרישת יבוא?',
+    'מה צריך לדרישת יצוא?',
+    'איך מציינים שעה במשלוח?',
+    'מה ספי הצעות המחיר ביבוא?',
+  ],
+  'credit-card': [
+    'איך משלמים על מאמר בכתב עת?',
+    'איך משלמים בכרטיס אשראי לאתר חו"ל?',
+    'מה הסף ל-Inputs Committee?',
+    'איך מקימים דרישה למנוי תוכנה?',
+  ],
+  scholarships: [
+    'איך מבטלים מלגה?',
+    'מה הדדליין לביטול מלגות?',
+    'איך משנים סכום מלגה?',
+    'איך מתחיל תהליך מלגה חדש?',
+  ],
+  expense: [
+    'איך מגישים החזר נסיעה?',
+    'מה הדדליין להגשה?',
+    'מה צריך להוכיח?',
+    'איך עוקבים אחרי החזר?',
+  ],
+  transport: [
+    'איך מזמינים אוטובוס?',
+    'מה הקטגוריה להיסעים?',
+    'איך מציינים שעה ומסלול?',
+    'מה לעשות עם כביש 6?',
+  ],
+  internal: [
+    'מה זה רכש פנימי?',
+    'מי הקניין של בינוי?',
+    'איך מזמינים מבירא?',
+    'איך עובדים עם BINO?',
+  ],
+  research: [
+    'איפה רואים את הדוח לחוקר?',
+    'מה זה encumbrance?',
+    'איך מנהלים תקציב grant?',
+    'איך עובדים עם רשות המחקר?',
+  ],
+};
 
 // === DOM helpers (safe — no innerHTML for any user content) ===
 function el(tag, opts) {
@@ -704,12 +823,50 @@ const BROWSE_TOPICS = {
   '08-scholarships-2026-04-16_summary': { title: 'הרצאה 4 — מלגות', file: '/lectures/08-scholarships-2026-04-16_summary.md' },
 };
 
+// Map browse topic IDs → specialist bot IDs (when one exists)
+const BROWSE_TO_BOT = {
+  'hazmat': 'hazmat',
+  'scholarships': 'scholarships',
+  'expense': 'expense',
+  'transport': 'transport',
+  'foreign': 'foreign',
+  'local-purchase': 'local-purchase',
+  'research': 'research',
+  'construction': 'internal',
+};
+
 async function renderBrowse(query) {
   const container = document.getElementById('browse-container');
   container.replaceChildren();
 
   const topicId = (query && query.topic) || 'workflows';
   const topic = BROWSE_TOPICS[topicId] || BROWSE_TOPICS['workflows'];
+
+  // Specialist bot CTA (if this browse topic maps to a specialist)
+  const botTopic = BROWSE_TO_BOT[topicId];
+  if (botTopic && TOPICS[botTopic]) {
+    const t = TOPICS[botTopic];
+    const cta = el('div', { className: 'specialist-cta' });
+    cta.appendChild(el('span', { className: 'text-3xl', text: t.icon }));
+    const txt = el('div', { className: 'specialist-cta-text' });
+    txt.appendChild(el('div', { className: 'font-bold text-primary-900', text: 'בוט מומחה זמין: ' + t.title }));
+    txt.appendChild(el('div', { className: 'text-sm text-primary-800 mt-0.5', text: t.description }));
+    cta.appendChild(txt);
+    const btn = el('button', { text: '💬 שאל את הבוט המומחה' });
+    btn.onclick = () => {
+      if (currentTopic !== botTopic) {
+        if (conversation.length === 0 || confirm('לפתוח שיחה עם ' + t.title + '?')) {
+          currentTopic = botTopic;
+          conversation.length = 0;
+          saveConversation();
+          updateTopicHeader();
+        }
+      }
+      openChatSheet();
+    };
+    cta.appendChild(btn);
+    container.appendChild(cta);
+  }
 
   const chipsRow = el('div', { className: 'flex flex-wrap gap-2 mb-6 overflow-x-auto' });
   ['workflows', 'categories-to-buyers', 'smart-forms', 'operational-rules', 'quote-thresholds', 'timeline', 'where-to-go', 'known-issues', 'glossary-brnet-vs-ananet'].forEach(id => {
@@ -790,10 +947,76 @@ function closeChatSheet() {
   chatSheet.classList.add('hidden');
 }
 
+// Current topic (default: general)
+let currentTopic = 'general';
+
+function getWelcomeMessage(topicId) {
+  const t = TOPICS[topicId] || TOPICS.general;
+  if (topicId === 'general') {
+    return 'שלום! אני **בוט עננט הכללי** — יודע על כל הנושאים: workflows רכש, מלגות, חומ"ס, חו"ל, היסעים, ועוד.\n\nשאל אותי בעברית, אנגלית, או כל שפה. למידע אישי (היתרה שלך, סטטוס דרישה) — אפנה אותך ל-ananet.service@biu.ac.il.\n\nרוצה דיוק ועומק בתחום ספציפי? לחץ על שם הבוט למעלה כדי לעבור לבוט מומחה.';
+  }
+  return 'שלום! אני **' + t.title + '** ' + t.icon + '\n\n**אני יודע רק על:** ' + t.description + '\n\nאם השאלה שלך מחוץ לתחום — אפנה אותך לבוט מומחה אחר או לבוט הכללי. החלפה — לחיצה על שם הבוט למעלה.';
+}
+
 function showWelcome() {
   chatMessages.replaceChildren();
-  addBotMessage('שלום! אני בוט עזרה למערכת עננט. שאל אותי בעברית, אנגלית, או כל שפה — אענה לפי 7 הקלטות הדרכה רשמיות, 40 PDFs, ושאלות-תשובות מהבוט הציבורי.\n\nאני לא תחליף ל-ananet.service@biu.ac.il. למידע אישי (היתרה שלך, סטטוס דרישה ספציפית) — אפנה אותך לערוץ הרשמי.');
-  showSuggestions(SUGGESTED_QUESTIONS.slice(0, 4));
+  addBotMessage(getWelcomeMessage(currentTopic));
+  const sugs = SUGGESTED_QUESTIONS[currentTopic] || SUGGESTED_QUESTIONS.general;
+  showSuggestions(sugs.slice(0, 4));
+}
+
+function updateTopicHeader() {
+  const t = TOPICS[currentTopic] || TOPICS.general;
+  const titleEl = document.getElementById('topic-title');
+  const iconEl = document.getElementById('topic-icon');
+  if (titleEl) titleEl.textContent = t.title;
+  if (iconEl) iconEl.textContent = t.icon;
+}
+
+function switchTopic(newTopicId) {
+  if (!TOPICS[newTopicId]) return;
+  if (newTopicId === currentTopic) return;
+  if (conversation.length > 0) {
+    if (!confirm('להחליף ל' + TOPICS[newTopicId].title + '? השיחה הנוכחית תיסגר.')) return;
+  }
+  currentTopic = newTopicId;
+  conversation.length = 0;
+  saveConversation();
+  updateTopicHeader();
+  showWelcome();
+  updateChatStatus();
+  closeTopicPicker();
+}
+
+function openTopicPicker() {
+  const modal = document.getElementById('topic-picker-modal');
+  const list = document.getElementById('topic-picker-list');
+  list.replaceChildren();
+
+  // General first, then specialists
+  const order = ['general', ...Object.keys(TOPICS).filter(k => k !== 'general')];
+  order.forEach(topicId => {
+    const t = TOPICS[topicId];
+    const card = el('button', { className: 'topic-card' + (topicId === currentTopic ? ' current' : '') });
+    card.appendChild(el('span', { className: 'icon', text: t.icon }));
+    const textWrap = el('div', { className: 'flex-1 min-w-0' });
+    const titleLine = el('div', { className: 'title' });
+    titleLine.appendChild(document.createTextNode(t.title));
+    if (topicId === currentTopic) {
+      titleLine.appendChild(el('span', { className: 'badge', text: 'נוכחי' }));
+    }
+    textWrap.appendChild(titleLine);
+    textWrap.appendChild(el('div', { className: 'desc', text: t.description }));
+    card.appendChild(textWrap);
+    card.onclick = () => switchTopic(topicId);
+    list.appendChild(card);
+  });
+
+  modal.classList.remove('hidden');
+}
+
+function closeTopicPicker() {
+  document.getElementById('topic-picker-modal').classList.add('hidden');
 }
 
 function showSuggestions(questions) {
@@ -868,7 +1091,7 @@ async function sendChatMessage(text) {
     const res = await fetch(BOT_ENDPOINT, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ messages: conversation, stream: true }),
+      body: JSON.stringify({ messages: conversation, topic: currentTopic }),
     });
 
     if (!res.ok) throw new Error('HTTP ' + res.status);
@@ -921,7 +1144,9 @@ async function sendChatMessage(text) {
     conversation.push({ role: 'assistant', content: accumulated });
     saveConversation();
     updateChatStatus();
-    showSuggestions(['תן לי את הקובץ', 'יש מקור?', 'מה הצעדים בדיוק?']);
+    // Show topic-aware follow-up suggestions
+    const sugs = SUGGESTED_QUESTIONS[currentTopic] || SUGGESTED_QUESTIONS.general;
+    showSuggestions(sugs.slice(0, 3));
 
   } catch (err) {
     typing.remove();
@@ -948,6 +1173,22 @@ document.getElementById('chat-clear').addEventListener('click', () => {
   showWelcome();
   updateChatStatus();
 });
+
+// Topic picker
+document.getElementById('topic-selector').addEventListener('click', openTopicPicker);
+document.getElementById('topic-picker-close').addEventListener('click', closeTopicPicker);
+document.getElementById('topic-picker-modal').addEventListener('click', (e) => {
+  if (e.target.id === 'topic-picker-modal') closeTopicPicker();
+});
+
+// Allow ?topic= query param to preselect a bot (deep link)
+function applyTopicFromUrl() {
+  const { query } = getCurrentRoute();
+  if (query.bot && TOPICS[query.bot]) {
+    currentTopic = query.bot;
+    updateTopicHeader();
+  }
+}
 
 function saveConversation() {
   try {
@@ -994,6 +1235,7 @@ document.getElementById('first-visit-dismiss').addEventListener('click', () => {
 loadConversation();
 checkFirstVisit();
 navigate();
+updateTopicHeader();
 
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && !chatSheet.classList.contains('hidden')) closeChatSheet();
