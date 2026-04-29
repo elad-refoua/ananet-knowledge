@@ -261,7 +261,10 @@ tailwind.config = {
         </p>
         <p>
           🔍 <strong>כל מידע ניתן לאימות</strong> מול חומרי המקור (PDFs, תמלולים) הזמינים בריפו. למידע אישי או החלטות מקצועיות — פנה לערוצים הרשמיים.
-          <a href="#/about" class="text-primary-600 underline">קרא עוד</a>
+        </p>
+        <p class="mt-3">
+          🤖 <strong>הבוט רץ על Gemini 2.5 Flash (חינם)</strong>. שיחות לא נשמרות בשרת שלי — אבל גוגל יכולה לראות אותן ב-Free Tier. אל תשלח מידע אישי.
+          <a href="#/about" class="text-primary-600 underline font-semibold">שקיפות מלאה →</a>
         </p>
       </div>
     </section>
@@ -311,37 +314,111 @@ tailwind.config = {
         <h2 class="text-2xl md:text-3xl font-bold mt-2">אודות המאגר</h2>
       </div>
       <div id="about-container" class="prose prose-slate max-w-none">
-        <h3>מה זה?</h3>
-        <p>מאגר ידע ציבורי, פתוח ומאורגן על מערכת <strong>עננט</strong> (Oracle Cloud ERP) של אוניברסיטת בר-אילן. מבוסס על:</p>
+
+        <h3>📚 מה זה?</h3>
+        <p>מאגר ידע ציבורי, פתוח ומאורגן על מערכת <strong>עננט</strong> (Oracle Cloud ERP) של אוניברסיטת בר-אילן.</p>
+
+        <h3>👤 מי בנה את זה?</h3>
+        <p><strong>אלעד רפואה</strong>, דוקטורנט במעבדה לרגש ויחסים בינאישיים בהנחיית <strong>פרופ' אשכול רפאלי</strong>, אוניברסיטת בר-אילן.</p>
+        <p>📬 <a href="mailto:eladrefoua@gmail.com">eladrefoua@gmail.com</a></p>
+
+        <hr>
+
+        <h3>🔬 שקיפות מלאה — מה בדיוק יש כאן?</h3>
+        <p>אני רוצה שתדע <strong>בדיוק</strong> איך זה עובד, על איזה מודל זה רץ, ומה כל אחד יכול לעשות עם הנתונים שלו.</p>
+
+        <h4>📦 חומרי המקור</h4>
         <ul>
-          <li><strong>7 הקלטות הדרכה רשמיות</strong> ממחלקת רכש (אפריל 2026) — תמלולים מלאים</li>
-          <li><strong>40 מסמכי PDF</strong> ההדרכתיים הרשמיים של בר-אילן</li>
+          <li><strong>7 הקלטות הדרכה רשמיות</strong> ממחלקת רכש (אפריל 2026) — תמלולים מלאים, ~1 MB</li>
+          <li><strong>40 מסמכי PDF</strong> ההדרכתיים הרשמיים של בר-אילן, ~114 MB</li>
           <li><strong>שאלות ותשובות</strong> מתוך הבוט הציבורי של מחלקת רכש (<a href="https://bar-ilan-ai-guide.lovable.app" target="_blank" rel="noopener">bar-ilan-ai-guide.lovable.app</a>)</li>
-          <li><strong>שאלות נפוצות</strong> ופירוטים מפורטל בר-אילן</li>
+          <li><strong>שאלות נפוצות + מסמכי עיון</strong> מהפורטל הפנימי של בר-אילן</li>
+          <li>סינתזות וסיכומים שאני (אלעד) ערכתי</li>
         </ul>
 
-        <h3>מי בנה את זה?</h3>
-        <p><strong>אלעד רפואה</strong>, דוקטורנט במעבדה לרגש ויחסים בינאישיים בהנחיית <strong>פרופ' אשכול רפאלי</strong>, אוניברסיטת בר-אילן.</p>
-
-        <h3>⚠️ דיסקליימר</h3>
-        <p>המאגר <strong>אינו על אחריות המתחזק</strong>. בינה מלאכותית עלולה לטעות, סיכומים עלולים להחמיץ ניואנסים, וחוקים עשויים להשתנות.</p>
-        <p>🔍 <strong>כל מידע ניתן לאימות</strong> מול חומרי המקור (PDFs, תמלולי הקלטות) — כולם זמינים בפתיחה ב-<a href="https://github.com/elad-refoua/ananet-knowledge" target="_blank" rel="noopener">GitHub</a>.</p>
-        <p>למידע אישי (היתרה שלך, סטטוס דרישה, הרשאות) — פנה לערוצים הרשמיים:</p>
+        <h4>🤖 הבוט — איזה מודל זה?</h4>
         <ul>
+          <li><strong>מודל</strong>: <code>gemini-2.5-flash</code> של Google</li>
+          <li><strong>שכבת חינמית (Free Tier)</strong> — 0 ש"ח עלות</li>
+          <li><strong>מגבלות יומיות</strong>: 250 בקשות ביום, 10 לדקה, 250,000 טוקנים לדקה</li>
+          <li><strong>מאגר ידע מובנה בפרומפט</strong>: 50 KB טקסט מובנה (כל קבצי ה-reference + help)</li>
+          <li><strong>הקשר</strong>: עד 1,048,576 טוקנים — מספיק לכל המאגר + הצ'אט שלך</li>
+          <li><strong>API endpoint</strong>: Cloudflare Pages Function (`/api/chat`) → Google AI</li>
+        </ul>
+
+        <h4>🏗️ ארכיטקטורה</h4>
+        <pre style="background: #f1f5f9; padding: 1rem; border-radius: 0.5rem; font-size: 0.85em; direction: ltr; text-align: left;">User browser
+  ↓
+Cloudflare Pages (static HTML/CSS/JS) — free tier
+  ↓ (chat endpoint only)
+Cloudflare Pages Function (/api/chat)
+  ↓
+Google AI Studio — Gemini 2.5 Flash (free tier)
+  ↓
+Response back to user</pre>
+
+        <h4>🔒 פרטיות ומה נשמר עלייך</h4>
+        <ul>
+          <li><strong>אין analytics, אין tracking, אין cookies מעקב.</strong></li>
+          <li><strong>אין הרשמה / התחברות / משתמשים.</strong></li>
+          <li><strong>שיחות הצ'אט שלך לא נשמרות בשרת שלי</strong> — רק זמנית בזיכרון של הבקשה. אחרי התשובה הן נמחקות.</li>
+          <li><strong>היסטוריית שיחה שלך נשמרת רק ב-localStorage של הדפדפן שלך</strong> (24 שעות), בלי לשלוח לשרת. ניתן לנקות בלחיצה על "נקה" בצ'אט.</li>
+          <li><strong>⚠️ Google כן יכולה לראות את השאלות שלך</strong> — בשכבת Free Tier של Gemini, גוגל רשאית להשתמש בשאלות+תשובות לאימון מודלים עתידיים. <strong>אל תשלח מידע אישי</strong> (מספר זהות, סיסמאות, פרטי חשבון בנק).</li>
+          <li>אם אתה זקוק ל-Pay-per-use (גוגל לא משתמשת בנתונים שלך לאימון) — פנה לערוצים הרשמיים של בר-אילן ולא לבוט הזה.</li>
+          <li><strong>כתובות IP</strong> — Cloudflare רואה אותן זמנית בלוגים שלהם (rotation יומי). אני לא ניגש אליהן.</li>
+        </ul>
+
+        <h4>🛡️ ניתוב שאלות אישיות</h4>
+        <p>הבוט אומן <strong>לא לענות</strong> על שאלות שדורשות גישה לחשבונך. במקום זה הוא מפנה:</p>
+        <ul>
+          <li><strong>"מה היתרה שלי?"</strong> → התחבר לעננט ישירות</li>
+          <li><strong>"מה הסטטוס של הדרישה שלי?"</strong> → עננט → ניהול דרישות</li>
+          <li><strong>"לא מצליח להתחבר"</strong> → מוקד תקשוב 072-2644999</li>
+          <li><strong>"שגיאת חומ"ס: פג תוקף הדרכה"</strong> → hazmat.barnet@biu.ac.il</li>
+          <li><strong>בעיית עננט שלא מתועדת</strong> → ananet.service@biu.ac.il</li>
+        </ul>
+
+        <h4>📞 מידע אישי על קניין (טלפון/חדר/מייל)</h4>
+        <p>הבוט יודע <strong>שמות</strong> של קניינים לפי קטגוריה (101-994), אבל <strong>לא נותן פרטי קשר אישיים</strong> (טלפון/חדר/מייל). זה כיבוד פרטיות של עובדי בר-אילן. ליצירת קשר ישיר — דרך <a href="mailto:ananet.service@biu.ac.il">ananet.service@biu.ac.il</a>.</p>
+
+        <h4>💰 כמה זה עולה?</h4>
+        <table style="margin: 0.5rem 0;">
+          <tr><th>רכיב</th><th>עלות</th></tr>
+          <tr><td>אחסון GitHub (ריפו פומבי)</td><td>$0</td></tr>
+          <tr><td>Cloudflare Pages (אתר + Functions)</td><td>$0</td></tr>
+          <tr><td>Google Gemini 2.5 Flash API</td><td>$0 (Free tier, עד 250 בקשות/יום)</td></tr>
+          <tr><th>סה"כ לחודש</th><th>$0</th></tr>
+        </table>
+        <p>אם השימוש יעבור 250 שאלות ביום, הבוט יחזיר הודעת "rate limited" ויציע ערוצים רשמיים. למחרת הספירה מתחילה מחדש.</p>
+
+        <h4>🔐 מפתחות / סודות</h4>
+        <p>מפתח ה-API של גוגל (GEMINI_API_KEY) <strong>לא נמצא בקוד הפומבי</strong>. הוא מאוחסן מוצפן ב-Cloudflare Secrets, נגיש רק ל-Worker בזמן ריצה. אפילו אני לא יכול לראות אותו אחרי שהוצפן.</p>
+
+        <h4>📤 איך מתעדכן?</h4>
+        <p>כל שינוי בריפו → דחיפה ל-Cloudflare Pages → באוויר תוך 60 שניות. הבוט אוטומטית רואה את העדכונים החדשים (קורא מאותו מקור).</p>
+
+        <hr>
+
+        <h3>⚠️ דיסקליימר חשוב</h3>
+        <p>המאגר <strong>אינו על אחריות המתחזק</strong>. בינה מלאכותית עלולה לטעות, סיכומים עלולים להחמיץ ניואנסים, וחוקים עשויים להשתנות. אם משהו נראה חשוד — <strong>אמת מול חומרי המקור</strong> (לינקים בכל דף).</p>
+        <p>למידע אישי או החלטות מקצועיות — <strong>פנה לערוצים הרשמיים</strong>:</p>
+        <ul>
+          <li>🔗 <a href="https://fa-eozj-saasfaprod1.fa.ocs.oraclecloud.com/fscmUI/faces/FuseWelcome" target="_blank" rel="noopener">פתח את עננט</a></li>
           <li>📧 <a href="mailto:ananet.service@biu.ac.il">ananet.service@biu.ac.il</a></li>
           <li>☎️ 072-2644999 ext 4999</li>
-          <li>🤖 <a href="https://bar-ilan-ai-guide.lovable.app" target="_blank" rel="noopener">הבוט הרשמי</a></li>
+          <li>🤖 <a href="https://bar-ilan-ai-guide.lovable.app" target="_blank" rel="noopener">הבוט הרשמי של מחלקת רכש</a></li>
         </ul>
 
-        <h3>רישיון</h3>
+        <h3>📜 רישיון</h3>
         <p>המאגר תחת <strong>CC-BY 4.0</strong>. אתה רשאי להוריד, להפיץ, לתרגם, ולבנות עליו — בתנאי שתציין מקור: <em>"מאגר עננט פתוח / אלעד רפואה, מעבדת רפאלי, בר-אילן"</em>.</p>
-        <p>חומרי המקור (PDFs, הקלטות) הם בקניין הרוחני של בר-אילן ומובאים כאן לצרכי לימוד והנגשה.</p>
+        <p>חומרי המקור (PDFs, הקלטות) הם בקניין הרוחני של בר-אילן ומובאים כאן לצרכי לימוד והנגשה (fair use). אם בר-אילן מבקש להסיר תוכן ספציפי — מסירים מיד.</p>
 
-        <h3>תיקונים ופידבקים</h3>
+        <h3>🐛 תיקונים ופידבקים</h3>
         <p>זיהית טעות? יש לך הצעה? כתוב ל-<a href="mailto:eladrefoua@gmail.com">eladrefoua@gmail.com</a></p>
 
-        <h3>קוד פתוח</h3>
-        <p>הריפו והאתר זמינים ב-<a href="https://github.com/elad-refoua/ananet-knowledge" target="_blank" rel="noopener">github.com/elad-refoua/ananet-knowledge</a></p>
+        <h3>💻 קוד פתוח</h3>
+        <p>כל הקוד והתוכן זמין ב-<a href="https://github.com/elad-refoua/ananet-knowledge" target="_blank" rel="noopener">github.com/elad-refoua/ananet-knowledge</a> תחת רישיון CC-BY 4.0.</p>
+
       </div>
     </div>
   </div>
