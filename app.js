@@ -365,6 +365,25 @@ function renderHome() {
     e.preventDefault();
     submitHeroChat();
   };
+
+  // Wire bot cards — clicking switches to that bot and opens chat
+  document.querySelectorAll('.bot-card').forEach(card => {
+    card.onclick = () => {
+      const botId = card.getAttribute('data-bot');
+      if (!TOPICS[botId]) return;
+      if (botId !== currentTopic) {
+        if (conversation.length === 0 || confirm('לפתוח שיחה עם ' + TOPICS[botId].title + '? (השיחה הנוכחית תיסגר)')) {
+          currentTopic = botId;
+          conversation.length = 0;
+          saveConversation();
+          updateTopicHeader();
+        } else {
+          return;
+        }
+      }
+      openChatSheet();
+    };
+  });
 }
 
 function submitHeroChat() {

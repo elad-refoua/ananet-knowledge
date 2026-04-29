@@ -31,11 +31,45 @@ body { -webkit-font-smoothing: antialiased; }
   display: block;
   text-decoration: none;
   color: inherit;
+  position: relative;
 }
 .topic-card:hover {
   border-color: rgb(56, 189, 248);
   background: rgb(240, 249, 255);
   transform: translateY(-1px);
+}
+
+.bot-badge {
+  display: inline-block;
+  margin-top: 0.5rem;
+  font-size: 0.7rem;
+  background: rgb(224, 242, 254);
+  color: rgb(2, 132, 199);
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+.bot-card {
+  background: linear-gradient(135deg, white 0%, rgb(240, 249, 255) 100%);
+  border: 2px solid rgb(186, 230, 253);
+  border-radius: 0.85rem;
+  padding: 0.85rem 0.5rem;
+  text-align: center;
+  transition: all 0.2s;
+  cursor: pointer;
+  font-family: inherit;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 110px;
+}
+.bot-card:hover {
+  border-color: rgb(2, 132, 199);
+  background: linear-gradient(135deg, rgb(224, 242, 254) 0%, rgb(186, 230, 253) 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.15);
 }
 
 .download-card {

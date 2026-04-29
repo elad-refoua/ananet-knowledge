@@ -20,7 +20,7 @@
 
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=3">
+<link rel="stylesheet" href="style.css?v=4">
 
 <script>
 tailwind.config = {
@@ -129,6 +129,72 @@ tailwind.config = {
       </div>
     </section>
 
+    <!-- Specialist Bots Section -->
+    <section class="max-w-6xl mx-auto px-4 pt-10 pb-4">
+      <div class="text-center mb-2">
+        <span class="inline-block bg-primary-100 text-primary-700 text-xs font-bold px-3 py-1 rounded-full">חדש</span>
+      </div>
+      <h3 class="text-xl md:text-2xl font-bold text-center mb-2">10 בוטים מומחים — אחד לכל נושא</h3>
+      <p class="text-sm md:text-base text-center text-slate-600 mb-6 max-w-2xl mx-auto">
+        כל בוט יושב <strong>רק על קבצי ההדרכה הרלוונטיים לתחומו</strong> — תשובות מדויקות וממוקדות יותר. לחץ על בוט כדי לפתוח שיחה.
+      </p>
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-2 md:gap-3">
+        <button class="bot-card" data-bot="general">
+          <div class="text-3xl md:text-4xl mb-1">🤖</div>
+          <h4 class="font-bold text-xs md:text-sm">בוט כללי</h4>
+          <p class="text-[10px] md:text-xs text-slate-600 mt-1">יודע על הכל</p>
+        </button>
+        <button class="bot-card" data-bot="hazmat">
+          <div class="text-3xl md:text-4xl mb-1">🧪</div>
+          <h4 class="font-bold text-xs md:text-sm">חומ"ס</h4>
+          <p class="text-[10px] md:text-xs text-slate-600 mt-1">חומרים מסוכנים</p>
+        </button>
+        <button class="bot-card" data-bot="local-purchase">
+          <div class="text-3xl md:text-4xl mb-1">🛒</div>
+          <h4 class="font-bold text-xs md:text-sm">רכש מקומי</h4>
+          <p class="text-[10px] md:text-xs text-slate-600 mt-1">מחירון, מלאי</p>
+        </button>
+        <button class="bot-card" data-bot="foreign">
+          <div class="text-3xl md:text-4xl mb-1">🌍</div>
+          <h4 class="font-bold text-xs md:text-sm">חו"ל</h4>
+          <p class="text-[10px] md:text-xs text-slate-600 mt-1">יבוא + יצוא</p>
+        </button>
+        <button class="bot-card" data-bot="credit-card">
+          <div class="text-3xl md:text-4xl mb-1">💳</div>
+          <h4 class="font-bold text-xs md:text-sm">תשלומי חו"ל</h4>
+          <p class="text-[10px] md:text-xs text-slate-600 mt-1">אשראי, העברה</p>
+        </button>
+        <button class="bot-card" data-bot="scholarships">
+          <div class="text-3xl md:text-4xl mb-1">🎓</div>
+          <h4 class="font-bold text-xs md:text-sm">מלגות</h4>
+          <p class="text-[10px] md:text-xs text-slate-600 mt-1">הקמה, ביטול</p>
+        </button>
+        <button class="bot-card" data-bot="expense">
+          <div class="text-3xl md:text-4xl mb-1">💸</div>
+          <h4 class="font-bold text-xs md:text-sm">החזר הוצאות</h4>
+          <p class="text-[10px] md:text-xs text-slate-600 mt-1">נסיעות, רכישות</p>
+        </button>
+        <button class="bot-card" data-bot="transport">
+          <div class="text-3xl md:text-4xl mb-1">🚌</div>
+          <h4 class="font-bold text-xs md:text-sm">היסעים</h4>
+          <p class="text-[10px] md:text-xs text-slate-600 mt-1">אוטובוס, מונית</p>
+        </button>
+        <button class="bot-card" data-bot="internal">
+          <div class="text-3xl md:text-4xl mb-1">🏗️</div>
+          <h4 class="font-bold text-xs md:text-sm">פנימי / בינוי</h4>
+          <p class="text-[10px] md:text-xs text-slate-600 mt-1">בירא, BINO</p>
+        </button>
+        <button class="bot-card" data-bot="research">
+          <div class="text-3xl md:text-4xl mb-1">🔬</div>
+          <h4 class="font-bold text-xs md:text-sm">רשות מחקר</h4>
+          <p class="text-[10px] md:text-xs text-slate-600 mt-1">דוח לחוקר, grants</p>
+        </button>
+      </div>
+      <p class="text-xs text-center text-slate-500 mt-4">
+        💡 לא בטוח באיזה בוט לבחור? שאל את הבוט הכללי — הוא יודע על הכל.
+      </p>
+    </section>
+
     <!-- Quick actions -->
     <section class="max-w-6xl mx-auto px-4 py-10">
       <h3 class="text-xl md:text-2xl font-bold text-center mb-6">פעולות מהירות</h3>
@@ -186,39 +252,48 @@ tailwind.config = {
 
     <!-- Browse by topic -->
     <section class="max-w-6xl mx-auto px-4 py-10">
-      <h3 class="text-xl md:text-2xl font-bold text-center mb-6">עיון לפי נושא</h3>
+      <h3 class="text-xl md:text-2xl font-bold text-center mb-2">עיון בקבצים לפי נושא</h3>
+      <p class="text-sm text-center text-slate-600 mb-6">קוראים את ההרצאות וה-PDFs בעצמך. בכל נושא — גם בוט מומחה זמין למעלה ⬆️</p>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
         <a href="#/browse?topic=local-purchase" class="topic-card">
           <div class="text-2xl md:text-3xl">🛒</div>
           <h4 class="font-semibold text-sm md:text-base mt-2">רכש מקומי</h4>
+          <span class="bot-badge">💬 בוט זמין</span>
         </a>
         <a href="#/browse?topic=foreign" class="topic-card">
           <div class="text-2xl md:text-3xl">🌍</div>
           <h4 class="font-semibold text-sm md:text-base mt-2">רכש מחו"ל</h4>
+          <span class="bot-badge">💬 בוט זמין</span>
         </a>
         <a href="#/browse?topic=hazmat" class="topic-card">
           <div class="text-2xl md:text-3xl">🧪</div>
           <h4 class="font-semibold text-sm md:text-base mt-2">חומרים מסוכנים</h4>
+          <span class="bot-badge">💬 בוט זמין</span>
         </a>
         <a href="#/browse?topic=scholarships" class="topic-card">
           <div class="text-2xl md:text-3xl">🎓</div>
           <h4 class="font-semibold text-sm md:text-base mt-2">מלגות</h4>
+          <span class="bot-badge">💬 בוט זמין</span>
         </a>
         <a href="#/browse?topic=expense" class="topic-card">
           <div class="text-2xl md:text-3xl">💸</div>
           <h4 class="font-semibold text-sm md:text-base mt-2">החזר הוצאות</h4>
+          <span class="bot-badge">💬 בוט זמין</span>
         </a>
         <a href="#/browse?topic=transport" class="topic-card">
           <div class="text-2xl md:text-3xl">🚌</div>
           <h4 class="font-semibold text-sm md:text-base mt-2">היסעים</h4>
+          <span class="bot-badge">💬 בוט זמין</span>
         </a>
         <a href="#/browse?topic=research" class="topic-card">
           <div class="text-2xl md:text-3xl">🔬</div>
           <h4 class="font-semibold text-sm md:text-base mt-2">רשות מחקר</h4>
+          <span class="bot-badge">💬 בוט זמין</span>
         </a>
         <a href="#/browse?topic=construction" class="topic-card">
           <div class="text-2xl md:text-3xl">🏗️</div>
           <h4 class="font-semibold text-sm md:text-base mt-2">בינוי ותפעול</h4>
+          <span class="bot-badge">💬 בוט זמין</span>
         </a>
       </div>
     </section>
@@ -570,6 +645,6 @@ Response back to user</pre>
   </div>
 </footer>
 
-<script src="app.js?v=3"></script>
+<script src="app.js?v=4"></script>
 </body>
 </html>
