@@ -1,0 +1,19 @@
+{
+  "name": "מאגר עננט — מערכת ה-ERP של בר-אילן",
+  "short_name": "מאגר עננט",
+  "description": "מאגר ידע פתוח על מערכת עננט. בוט שיחה, חיפוש, מציאת קניין, אשף תהליכים.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#0284c7",
+  "lang": "he",
+  "dir": "rtl",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

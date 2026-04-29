@@ -1,0 +1,45 @@
+# Cloudflare Pages — cache + security headers
+
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: SAMEORIGIN
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+
+# Static assets — long cache
+/*.css
+  Cache-Control: public, max-age=86400, must-revalidate
+
+/*.js
+  Cache-Control: public, max-age=86400, must-revalidate
+
+/favicon.svg
+  Cache-Control: public, max-age=604800
+
+# JSON data — short cache (so updates show fast)
+/data/*
+  Cache-Control: public, max-age=300, must-revalidate
+
+# Markdown — short cache
+/reference/*
+  Cache-Control: public, max-age=600, must-revalidate
+
+/help/*
+  Cache-Control: public, max-age=600, must-revalidate
+
+/lectures/*
+  Cache-Control: public, max-age=600, must-revalidate
+
+/summaries/*
+  Cache-Control: public, max-age=600, must-revalidate
+
+# PDFs — long cache (rarely change)
+/pdfs/*
+  Cache-Control: public, max-age=2592000
+
+# Index — short cache for fast updates
+/
+  Cache-Control: public, max-age=60, must-revalidate
+
+/index.html
+  Cache-Control: public, max-age=60, must-revalidate
