@@ -436,10 +436,15 @@ Response back to user</pre>
     <div class="flex items-center justify-between p-4 border-b border-slate-200">
       <div class="flex items-center gap-2">
         <span class="text-2xl">🤖</span>
-        <h3 class="font-bold">בוט עננט</h3>
+        <div>
+          <h3 class="font-bold">בוט עננט</h3>
+          <p id="chat-status" class="text-xs text-slate-500">שיחה חדשה</p>
+        </div>
       </div>
       <div class="flex items-center gap-2">
-        <button id="chat-clear" class="text-xs text-slate-500 hover:text-slate-700 px-2 py-1">נקה</button>
+        <button id="chat-clear" title="התחל שיחה חדשה (יאפס את ההיסטוריה)" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-lg flex items-center gap-1 transition">
+          🔄 שיחה חדשה
+        </button>
         <button id="chat-close" class="text-2xl text-slate-400 hover:text-slate-600 w-8 h-8 flex items-center justify-center" aria-label="סגור">×</button>
       </div>
     </div>

@@ -10,7 +10,8 @@
 
 import { KB } from './_kb.js';
 
-const GEMINI_MODEL = 'gemini-2.5-flash';
+// Try models in order: lite is more available; flash is higher quality but often 503 due to demand
+const GEMINI_MODELS = ['gemini-2.5-flash-lite', 'gemini-2.5-flash', 'gemini-flash-latest'];
 const MAX_OUTPUT_TOKENS = 1500;
 
 const SYSTEM_INSTRUCTIONS = `אתה עוזר ידע פתוח למערכת עננט (Oracle Cloud ERP) של אוניברסיטת בר-אילן.
@@ -137,28 +138,46 @@ export async function onRequestPost(context) {
   };
 
   const endpoint = wantsStream ? 'streamGenerateContent?alt=sse&key=' : 'generateContent?key=';
-  const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:${endpoint}${env.GEMINI_API_KEY}`;
 
-  let geminiRes;
-  try {
-    geminiRes = await fetch(geminiUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(geminiBody),
-    });
-  } catch (e) {
-    return jsonResponse({ error: 'שגיאה בחיבור לשירות הבוט: ' + e.message }, 502);
+  // Try each model in order; fall through on 503/overload errors
+  let geminiRes = null;
+  let lastErrText = '';
+  let usedModel = null;
+  for (const model of GEMINI_MODELS) {
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:${endpoint}${env.GEMINI_API_KEY}`;
+    try {
+      const r = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(geminiBody),
+      });
+      if (r.ok) {
+        geminiRes = r;
+        usedModel = model;
+        break;
+      }
+      // Try to read error to decide whether to retry next model
+      lastErrText = await r.text();
+      // Retry on 503 (overload) and 429 (rate limit) — try next model
+      if (r.status !== 503 && r.status !== 429) {
+        // Hard error — return immediately
+        return jsonResponse({ error: 'Gemini API ' + r.status + ': ' + lastErrText.slice(0, 300) }, 502);
+      }
+      // else loop continues to next model
+    } catch (e) {
+      lastErrText = e.message;
+    }
   }
 
-  if (!geminiRes.ok) {
-    const errText = await geminiRes.text();
-    return jsonResponse({ error: 'Gemini API ' + geminiRes.status + ': ' + errText.slice(0, 300) }, 502);
+  if (!geminiRes) {
+    // All models failed
+    return jsonResponse({ error: 'כל המודלים של Gemini עמוסים כעת. נסה שוב בעוד דקה. (' + lastErrText.slice(0, 200) + ')' }, 502);
   }
 
   if (!wantsStream) {
     const data = await geminiRes.json();
     const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text || 'מצטער, לא הצלחתי לייצר תשובה.';
-    return jsonResponse({ reply });
+    return jsonResponse({ reply, model: usedModel });
   }
 
   // Streaming SSE: parse Gemini's SSE, re-emit as our format
@@ -168,6 +187,7 @@ export async function onRequestPost(context) {
       const decoder = new TextDecoder();
       const encoder = new TextEncoder();
       let buf = '';
+      let sentAnyText = false;
 
       try {
         while (true) {
@@ -184,17 +204,33 @@ export async function onRequestPost(context) {
               if (!dataStr) continue;
               try {
                 const data = JSON.parse(dataStr);
+                // Surface API errors visibly
+                if (data.error) {
+                  controller.enqueue(encoder.encode('data: ' + JSON.stringify({ text: '\n\n⚠️ שגיאת Gemini: ' + (data.error.message || 'unknown') }) + '\n\n'));
+                  continue;
+                }
                 const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
                 if (text) {
+                  sentAnyText = true;
                   controller.enqueue(encoder.encode('data: ' + JSON.stringify({ text }) + '\n\n'));
+                }
+                // Surface block reasons
+                const finishReason = data?.candidates?.[0]?.finishReason;
+                if (finishReason && finishReason !== 'STOP' && !sentAnyText) {
+                  controller.enqueue(encoder.encode('data: ' + JSON.stringify({ text: 'התשובה נחסמה: ' + finishReason }) + '\n\n'));
                 }
               } catch (e) { /* ignore parse errors */ }
             }
           }
         }
+        // If nothing was streamed, surface a clearer error
+        if (!sentAnyText) {
+          controller.enqueue(encoder.encode('data: ' + JSON.stringify({ text: 'לא התקבלה תשובה מ-Gemini. ייתכן שהמודל עמוס. נסה שוב בעוד רגע.' }) + '\n\n'));
+        }
         controller.enqueue(encoder.encode('data: [DONE]\n\n'));
       } catch (e) {
-        controller.enqueue(encoder.encode('data: ' + JSON.stringify({ error: e.message }) + '\n\n'));
+        controller.enqueue(encoder.encode('data: ' + JSON.stringify({ text: '\n\n⚠️ ' + e.message }) + '\n\n'));
+        controller.enqueue(encoder.encode('data: [DONE]\n\n'));
       } finally {
         controller.close();
       }
@@ -207,6 +243,7 @@ export async function onRequestPost(context) {
       'Cache-Control': 'no-cache',
       'Connection': 'keep-alive',
       'Access-Control-Allow-Origin': '*',
+      'X-Used-Model': usedModel || '',
     },
   });
 }

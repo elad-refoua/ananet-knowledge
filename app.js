@@ -757,8 +757,33 @@ const chatSuggestions = document.getElementById('chat-suggestions');
 
 function openChatSheet() {
   chatSheet.classList.remove('hidden');
-  if (conversation.length === 0) showWelcome();
+  if (conversation.length === 0) {
+    showWelcome();
+  } else if (chatMessages.children.length === 0) {
+    // Restore conversation to UI (e.g., after page reload)
+    restoreConversationToUI();
+  }
+  updateChatStatus();
   setTimeout(() => chatInput.focus(), 100);
+}
+
+function restoreConversationToUI() {
+  chatMessages.replaceChildren();
+  conversation.forEach(m => {
+    if (m.role === 'user') addUserMessage(m.content);
+    else addBotMessage(m.content);
+  });
+}
+
+function updateChatStatus() {
+  const statusEl = document.getElementById('chat-status');
+  if (!statusEl) return;
+  const userMsgs = conversation.filter(m => m.role === 'user').length;
+  if (userMsgs === 0) {
+    statusEl.textContent = 'שיחה חדשה';
+  } else {
+    statusEl.textContent = userMsgs + ' שאלות בשיחה — ההקשר נשמר';
+  }
 }
 
 function closeChatSheet() {
@@ -895,6 +920,7 @@ async function sendChatMessage(text) {
 
     conversation.push({ role: 'assistant', content: accumulated });
     saveConversation();
+    updateChatStatus();
     showSuggestions(['תן לי את הקובץ', 'יש מקור?', 'מה הצעדים בדיוק?']);
 
   } catch (err) {
@@ -914,14 +940,19 @@ chatForm.addEventListener('submit', (e) => { e.preventDefault(); sendChatFromInp
 document.getElementById('chat-close').addEventListener('click', closeChatSheet);
 document.getElementById('floating-chat-btn').addEventListener('click', openChatSheet);
 document.getElementById('chat-clear').addEventListener('click', () => {
+  if (conversation.length > 0) {
+    if (!confirm('להתחיל שיחה חדשה? כל ההיסטוריה תימחק.')) return;
+  }
   conversation.length = 0;
   saveConversation();
   showWelcome();
+  updateChatStatus();
 });
 
 function saveConversation() {
   try {
-    const trimmed = conversation.slice(-10);
+    // Keep last 30 messages — enough for solid context, not too heavy
+    const trimmed = conversation.slice(-30);
     localStorage.setItem('ananet-chat', JSON.stringify({ at: Date.now(), msgs: trimmed }));
   } catch (e) { /* ignore */ }
 }
@@ -931,16 +962,13 @@ function loadConversation() {
     const raw = localStorage.getItem('ananet-chat');
     if (!raw) return;
     const data = JSON.parse(raw);
-    if (Date.now() - data.at > 24 * 60 * 60 * 1000) {
+    // 7 days retention
+    if (Date.now() - data.at > 7 * 24 * 60 * 60 * 1000) {
       localStorage.removeItem('ananet-chat');
       return;
     }
     conversation.push(...data.msgs);
-    chatMessages.replaceChildren();
-    data.msgs.forEach(m => {
-      if (m.role === 'user') addUserMessage(m.content);
-      else addBotMessage(m.content);
-    });
+    // Don't render to UI yet — wait until chat is opened (avoids flicker on page load)
   } catch (e) { /* ignore */ }
 }
 
