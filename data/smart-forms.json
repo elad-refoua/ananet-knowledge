@@ -1,0 +1,148 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "last_updated": "2026-04-27",
+    "source": "BIU procurement department training materials + lectures",
+    "license": "CC-BY-4.0"
+  },
+  "smart_forms": [
+    {
+      "id": 1,
+      "name_he": "העברה בנקאית לחו\"ל ללא יבוא",
+      "name_en": "Bank transfer abroad without import",
+      "use_case": "Direct bank payment to foreign supplier without physical shipment",
+      "examples": ["Journal article publication fees", "International association membership", "Payment to foreign collaborator"],
+      "mandatory_fields": ["foreign supplier name (English)", "description (English)", "amount + currency", "destination bank account"],
+      "buyer": "רגנשטיינר, ג'רמי",
+      "thresholds": {"article_fee_750_usd": "Above $750 requires Inputs Committee approval"}
+    },
+    {
+      "id": 2,
+      "name_he": "קניה בכרטיס אשראי ללא יבוא מאתרים בחו\"ל",
+      "name_en": "Credit card purchase abroad without import",
+      "use_case": "Online purchase from foreign site without physical shipment",
+      "examples": ["Software annual license (Adobe, MATLAB)", "Cloud subscription (DropBox)", "Virtual conference registration"],
+      "mandatory_fields": ["foreign supplier (English)", "description (English)", "site URL", "username + password (if needed, in attachment)"],
+      "buyer": "רגנשטיינר, ג'רמי / נגר, לבנה (250)"
+    },
+    {
+      "id": 3,
+      "name_he": "דרישת רכש לחומרים מסוכנים",
+      "name_en": "Hazmat purchase requisition",
+      "use_case": "Any chemical for laboratory — including DDW40 (deionized water)",
+      "examples": ["Reagents", "Buffers", "Kits", "Solutions", "Gels"],
+      "mandatory_fields": ["attribute value = חומרים מסוכנים", "exact מק\"ט (matches package size)", "lab name + personal lab code", "SDS V acknowledgment"],
+      "common_errors": ["Training expired", "Quantity exceeds permit"],
+      "error_email": "hazmat.barnet@biu.ac.il",
+      "buyer": "קליין, גרי (501-533) / מולצנסקי, שחר (373-377, 661)"
+    },
+    {
+      "id": 4,
+      "name_he": "דרישת יבוא",
+      "name_en": "Foreign import requisition",
+      "use_case": "Physical import of items from abroad to Israel",
+      "mandatory_fields_he": [
+        "תיאור באנגלית, בדיוק כמו בהצעת המחיר",
+        "שורה נפרדת לכל פריט",
+        "ספק חו\"ל באנגלית (או GENERAL אם לא במערכת)",
+        "מטבע USD/EUR/וכו' (תואם הצעה)",
+        "מחיר נטו (אחרי הנחות)",
+        "כתובת מייל של ספק / איש קשר",
+        "קירור נדרש? (כן/לא — חובה לציין)",
+        "מספר סלולרי של מקבל"
+      ],
+      "attribute_value_row": "אחר",
+      "attribute_value_header": "ייבוא",
+      "key_change_from_brnet": "Only the requester edits — buyer no longer edits on requester's behalf",
+      "buyer": "שובל, שי"
+    },
+    {
+      "id": 5,
+      "name_he": "דרישת יצוא",
+      "name_en": "Foreign export requisition",
+      "use_case": "Physical shipment from Israel to abroad",
+      "additional_fields_he": [
+        "מידות חבילה בס\"מ (אורך × רוחב × גובה)",
+        "משקל בק\"ג",
+        "מי משלם על המשלוח (שולח / מקבל / חצי-חצי)",
+        "כתובת מייל של מקבל"
+      ],
+      "post_creation": "Email with instructions + export bill template will be sent to requester",
+      "carrier": "FedEx (only outbound carrier from BIU)",
+      "buyer": "שובל, שי"
+    },
+    {
+      "id": 6,
+      "name_he": "רכש מהמלאי",
+      "name_en": "Inventory pull",
+      "use_case": "Items from BIU central warehouse",
+      "warehouse_name": "מחסן כללי (was: המחסן המרכזי in Brnet)",
+      "items_count": 242,
+      "mandatory_fields_he": [
+        "סוג מקור = מלאי (NOT 'ספק חיצוני')",
+        "סוג יעד = הוצאה",
+        "מחסן מקור = מחסן כללי",
+        "ערך תכונה = אחר"
+      ],
+      "forbidden": "Do NOT mark 'תשומת מחקר' — no warehouse item is a research input",
+      "no_buyer": true,
+      "process": "Becomes Internal Transfer; no buyer involvement"
+    },
+    {
+      "id": 7,
+      "name_he": "רכש היסעים",
+      "name_en": "Transport requisition",
+      "use_case": "Buses, taxis, car rental",
+      "mandatory_fields_he": [
+        "שורה אחת = אוטובוס אחד (NO bundling)",
+        "שעות התייצבות",
+        "מקום איסוף",
+        "מסלול מדויק",
+        "שם וטלפון של אחראי הנסיעה",
+        "שורה נפרדת לכביש 6 (if applicable)",
+        "ערך תכונה = הסעים"
+      ],
+      "no_quote_needed": true,
+      "buyer": "כהן, איריס (141, 142) / וולף, עופר (699)"
+    },
+    {
+      "id": 8,
+      "name_he": "רכש בירא / בינו",
+      "name_en": "BIRA / BINO internal services",
+      "use_case": "Internal services from BIRA (851) or BINO sub-departments (900-994)",
+      "buyer": "Per category in categories-to-buyers.md"
+    },
+    {
+      "id": 9,
+      "name_he": "העברת כספים",
+      "name_en": "Money transfer (non-purchase)",
+      "use_case": "Payments that are not purchase of goods/services",
+      "examples": ["Scholarship payments (number field 'מספר מלגה' in header)", "Internal budget transfers"]
+    },
+    {
+      "id": 10,
+      "name_he": "קניה בכרטיס אשראי ללא יבוא (מקומי)",
+      "name_en": "Credit card purchase domestic without import",
+      "use_case": "Local purchase by credit card instead of regular quote-based flow"
+    },
+    {
+      "id": 11,
+      "name_he": "רכישה מאתר אינטרנט של ספק",
+      "name_en": "Web purchase from supplier site",
+      "use_case": "Purchase from supplier site with shopping cart (not foreign, with shipping)",
+      "mandatory_fields_he": [
+        "לינק לאתר",
+        "שם משתמש + סיסמה (in secured fields)",
+        "צילום מסך של עגלת הקניות (mandatory attachment)"
+      ],
+      "process": "Buyer logs in to cart and completes purchase"
+    }
+  ],
+  "general_rules_for_all_forms": [
+    "Always: choose attribute value after adding to cart",
+    "Always: valid mobile phone of recipient",
+    "Always: attach quote/Proforma per quote-thresholds rules",
+    "Always: separate row per item (no bundling)",
+    "Requester's responsibility: verify the requisition moved to approval cycle after 10 minutes"
+  ]
+}

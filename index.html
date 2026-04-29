@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>מאגר ידע — מערכת עננט (Ananet) | בר-אילן</title>
+<meta name="description" content="מאגר ידע ציבורי על מערכת עננט (Oracle Cloud ERP) של בר-אילן. בוט שיחה, חיפוש מלא, הורדת קבצים. מבוסס על הקלטות הדרכה רשמיות ו-40 PDFs.">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: { 'heebo': ['Heebo', 'sans-serif'] },
+      colors: {
+        primary: { 50: '#f0f9ff', 100: '#e0f2fe', 500: '#0ea5e9', 600: '#0284c7', 700: '#0369a1', 800: '#075985', 900: '#0c4a6e' }
+      }
+    }
+  }
+}
+</script>
+</head>
+
+<body class="bg-slate-50 font-heebo text-slate-900 min-h-screen">
+
+<!-- Header -->
+<header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm">
+  <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="text-3xl">🏛️</div>
+      <div>
+        <h1 class="text-xl font-bold text-slate-900">מאגר ידע — עננט</h1>
+        <p class="text-xs text-slate-500">מערכת ה-ERP של בר-אילן</p>
+      </div>
+    </div>
+    <nav class="hidden md:flex items-center gap-5 text-sm font-medium text-slate-600">
+      <a href="#workflows" class="hover:text-primary-600">תהליכים</a>
+      <a href="#categories" class="hover:text-primary-600">קטגוריות</a>
+      <a href="#rules" class="hover:text-primary-600">חוקים</a>
+      <a href="#timeline" class="hover:text-primary-600">תאריכים</a>
+      <a href="#help" class="hover:text-primary-600">עזרה</a>
+      <a href="#bot" class="bg-primary-600 hover:bg-primary-700 text-white px-4 py-1.5 rounded-lg">💬 שאל את הבוט</a>
+    </nav>
+    <button onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="md:hidden text-2xl">☰</button>
+  </div>
+  <div id="mobile-menu" class="hidden md:hidden border-t border-slate-200 bg-white">
+    <div class="px-4 py-3 flex flex-col gap-3 text-sm">
+      <a href="#workflows" class="text-slate-700">תהליכים</a>
+      <a href="#categories" class="text-slate-700">קטגוריות</a>
+      <a href="#rules" class="text-slate-700">חוקים</a>
+      <a href="#timeline" class="text-slate-700">תאריכים</a>
+      <a href="#help" class="text-slate-700">עזרה</a>
+      <a href="#bot" class="bg-primary-600 text-white px-4 py-1.5 rounded-lg text-center">💬 שאל את הבוט</a>
+    </div>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="bg-gradient-to-br from-primary-700 via-primary-600 to-primary-800 text-white">
+  <div class="max-w-4xl mx-auto px-4 py-16 text-center">
+    <div class="inline-block bg-white/10 backdrop-blur px-4 py-1 rounded-full text-sm mb-4">
+      ✅ מערכת עננט עלתה לאוויר ב-27.4.2026
+    </div>
+    <h2 class="text-3xl md:text-5xl font-bold mb-4 leading-tight">
+      כל מה שצריך לדעת על מערכת עננט<br>במקום אחד
+    </h2>
+    <p class="text-lg text-primary-100 mb-8 max-w-2xl mx-auto leading-relaxed">
+      מאגר ידע פתוח ושיתופי, מבוסס על 7 הקלטות הדרכה רשמיות, 40 מסמכי PDF, ושאלות-תשובות מהבוט הציבורי של מחלקת רכש.
+    </p>
+    <div class="flex flex-wrap items-center justify-center gap-3">
+      <a href="#bot" class="bg-white text-primary-700 px-6 py-3 rounded-xl font-semibold hover:bg-primary-50 transition">
+        💬 שאל את הבוט
+      </a>
+      <a href="https://github.com/elad-refoua/ananet-knowledge" class="bg-white/10 backdrop-blur border border-white/30 px-6 py-3 rounded-xl font-semibold hover:bg-white/20 transition">
+        📥 הורד את כל המאגר
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Disclaimer -->
+<section class="bg-amber-50 border-y border-amber-200">
+  <div class="max-w-4xl mx-auto px-4 py-4 text-sm text-amber-900">
+    ⚠️ <strong>דיסקליימר:</strong> המאגר נערך ע"י <a class="underline" href="mailto:eladrefoua@gmail.com">אלעד רפואה</a>, דוקטורנט במעבדה לרגש ויחסים בינאישיים, פרופ' אשכול רפאלי, אוניברסיטת בר-אילן. <strong>אינו על אחריות המתחזק.</strong> בינה מלאכותית עלולה לטעות. כל מידע ניתן לאימות מול חומרי המקור הזמינים בריפו. למידע אישי או החלטות מקצועיות — פנה לערוצים הרשמיים: <a class="underline font-semibold" href="mailto:ananet.service@biu.ac.il">ananet.service@biu.ac.il</a> | 072-2644999 ext 4999
+  </div>
+</section>
+
+<!-- Quick Search -->
+<section class="bg-white border-b border-slate-200">
+  <div class="max-w-4xl mx-auto px-4 py-6">
+    <div class="relative">
+      <input id="search" type="text" placeholder="🔍 חפש: 'מי הקניין של מחשבים?', 'איך מקימים דרישת חומ\"ס?', 'דדליין מלגות'..."
+             class="w-full bg-slate-100 border border-slate-200 rounded-xl px-5 py-3 text-base outline-none focus:bg-white focus:border-primary-500 focus:ring-2 focus:ring-primary-200 transition">
+    </div>
+    <div id="search-results" class="mt-3 hidden bg-white border border-slate-200 rounded-xl shadow-lg p-3 max-h-96 overflow-y-auto"></div>
+  </div>
+</section>
+
+<!-- Main Content -->
+<main class="max-w-6xl mx-auto px-4 py-10">
+
+  <!-- Workflows -->
+  <section id="workflows" class="mb-16">
+    <h3 class="text-2xl font-bold mb-6 flex items-center gap-2">📋 11 סוגי דרישות רכש</h3>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <a href="https://github.com/elad-refoua/ananet-knowledge/blob/main/reference/workflows.md#1-רכש-מהמלאי-inventory-pull" class="bg-white p-5 rounded-xl border border-slate-200 hover:border-primary-400 hover:shadow-md transition">
+        <div class="text-3xl mb-2">📦</div>
+        <h4 class="font-bold mb-1">רכש מהמלאי</h4>
+        <p class="text-sm text-slate-600">פריטים מהמחסן הראשי. ללא קניין.</p>
+      </a>
+      <a href="https://github.com/elad-refoua/ananet-knowledge/blob/main/reference/workflows.md#2-רכש-מקומי-local-with-quote" class="bg-white p-5 rounded-xl border border-slate-200 hover:border-primary-400 hover:shadow-md transition">
+        <div class="text-3xl mb-2">🛒</div>
+        <h4 class="font-bold mb-1">רכש מקומי</h4>
+        <p class="text-sm text-slate-600">ספק בארץ, הצעת מחיר ספציפית.</p>
+      </a>
+      <a href="https://github.com/elad-refoua/ananet-knowledge/blob/main/reference/workflows.md#3-רכש-ממחירון-catalog" class="bg-white p-5 rounded-xl border border-slate-200 hover:border-primary-400 hover:shadow-md transition">
+        <div class="text-3xl mb-2">📑</div>
+        <h4 class="font-bold mb-1">רכש ממחירון</h4>
+        <p class="text-sm text-slate-600">פריטים בהסכמי מסגרת.</p>
+      </a>
+      <a href="https://github.com/elad-refoua/ananet-knowledge/blob/main/reference/workflows.md#4-רכש-חומס-hazmat" class="bg-white p-5 rounded-xl border border-slate-200 hover:border-primary-400 hover:shadow-md transition">
+        <div class="text-3xl mb-2">🧪</div>
+        <h4 class="font-bold mb-1">רכש חומ"ס</h4>
+        <p class="text-sm text-slate-600">חומרים מסוכנים למעבדה.</p>
+      </a>
+      <a href="https://github.com/elad-refoua/ananet-knowledge/blob/main/reference/workflows.md#5-רכש-טובין-מחול-foreign-import---with-shipment" class="bg-white p-5 rounded-xl border border-slate-200 hover:border-primary-400 hover:shadow-md transition">
+        <div class="text-3xl mb-2">✈️</div>
+        <h4 class="font-bold mb-1">רכש מחו"ל</h4>
+        <p class="text-sm text-slate-600">ייבוא פיזי לארץ.</p>
+      </a>
+      <a href="https://github.com/elad-refoua/ananet-knowledge/blob/main/reference/workflows.md#6-קניה-בכרטיס-אשראי-ללא-ייבוא-credit-card-no-shipment" class="bg-white p-5 rounded-xl border border-slate-200 hover:border-primary-400 hover:shadow-md transition">
+        <div class="text-3xl mb-2">💳</div>
+        <h4 class="font-bold mb-1">אשראי ללא ייבוא</h4>
+        <p class="text-sm text-slate-600">רכישה אונליין מחו"ל ללא משלוח.</p>
+      </a>
+      <a href="https://github.com/elad-refoua/ananet-knowledge/blob/main/reference/workflows.md#7-העברת-כספים-לחול-ללא-ייבוא-bank-transfer-no-shipment" class="bg-white p-5 rounded-xl border border-slate-200 hover:border-primary-400 hover:shadow-md transition">
+        <div class="text-3xl mb-2">🏦</div>
+        <h4 class="font-bold mb-1">העברה בנקאית</h4>
+        <p class="text-sm text-slate-600">תשלום ישיר לספק חו"ל.</p>
+      </a>
+      <a href="https://github.com/elad-refoua/ananet-knowledge/blob/main/reference/workflows.md#10-רכש-היסעים-transport" class="bg-white p-5 rounded-xl border border-slate-200 hover:border-primary-400 hover:shadow-md transition">
+        <div class="text-3xl mb-2">🚌</div>
+        <h4 class="font-bold mb-1">רכש היסעים</h4>
+        <p class="text-sm text-slate-600">אוטובוסים, מוניות, השכרת רכב.</p>
+      </a>
+      <a href="https://github.com/elad-refoua/ananet-knowledge/blob/main/reference/workflows.md" class="bg-slate-100 p-5 rounded-xl border border-dashed border-slate-300 hover:bg-white hover:border-primary-400 transition flex items-center justify-center text-center">
+        <div>
+          <div class="text-3xl mb-2">→</div>
+          <h4 class="font-bold mb-1">+ עוד 3</h4>
+          <p class="text-sm text-slate-600">רכש פנימי, בירא, בינוי</p>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- Categories -->
+  <section id="categories" class="mb-16 bg-white rounded-2xl p-8 border border-slate-200">
+    <h3 class="text-2xl font-bold mb-2 flex items-center gap-2">📞 קטגוריות וקניינים</h3>
+    <p class="text-slate-600 mb-6">כל פריט בעננט שייך לקטגוריה ממוספרת. הקטגוריה מנתבת את הדרישה לקניין הנכון.</p>
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-3">
+      <div class="bg-slate-50 p-4 rounded-lg"><strong class="text-primary-700">101-148</strong><p class="text-sm text-slate-600">רכש מקומי כללי</p></div>
+      <div class="bg-slate-50 p-4 rounded-lg"><strong class="text-primary-700">149-153</strong><p class="text-sm text-slate-600">ציוד מחשוב (יועץ חובה)</p></div>
+      <div class="bg-slate-50 p-4 rounded-lg"><strong class="text-primary-700">202-261</strong><p class="text-sm text-slate-600">חו"ל (לוגיסטיקה + תשלומים)</p></div>
+      <div class="bg-slate-50 p-4 rounded-lg"><strong class="text-primary-700">373-377</strong><p class="text-sm text-slate-600">חיות, מזון, תרופות</p></div>
+      <div class="bg-slate-50 p-4 rounded-lg"><strong class="text-primary-700">501-533</strong><p class="text-sm text-slate-600">ציוד מעבדה מתכלה</p></div>
+      <div class="bg-slate-50 p-4 rounded-lg"><strong class="text-primary-700">699, 851, 899</strong><p class="text-sm text-slate-600">היסעים, בירא, מלאי</p></div>
+      <div class="bg-slate-50 p-4 rounded-lg"><strong class="text-primary-700">900-994</strong><p class="text-sm text-slate-600">בינו (תפעול ובינוי)</p></div>
+      <div class="bg-slate-50 p-4 rounded-lg"><strong class="text-primary-700">975-993</strong><p class="text-sm text-slate-600">שירותי פקולטה</p></div>
+    </div>
+    <a href="https://github.com/elad-refoua/ananet-knowledge/blob/main/reference/categories-to-buyers.md" class="inline-block mt-6 text-primary-600 hover:text-primary-700 font-semibold">→ רשימה מלאה (101-994 → קניין)</a>
+  </section>
+
+  <!-- Rules -->
+  <section id="rules" class="mb-16">
+    <h3 class="text-2xl font-bold mb-6 flex items-center gap-2">⚖️ 10 חוקי הברזל</h3>
+    <div class="bg-white rounded-xl border border-slate-200 divide-y divide-slate-200">
+      <div class="p-4 flex items-start gap-3"><span class="text-2xl">❌</span><div><strong>אסור Back של הדפדפן</strong> — תוצא מהמערכת. רק כפתורי ניווט פנימיים.</div></div>
+      <div class="p-4 flex items-start gap-3"><span class="text-2xl">🏪</span><div><strong>ספק אחד לכל דרישה</strong> — חוק ברזל. דרישה חדשה לכל ספק.</div></div>
+      <div class="p-4 flex items-start gap-3"><span class="text-2xl">✏️</span><div><strong>רק הדורש עורך את הדרישה</strong> — שינוי מברנט. הקניין לא יערוך עבורך.</div></div>
+      <div class="p-4 flex items-start gap-3"><span class="text-2xl">⏱️</span><div><strong>Test Validation עד 10 דקות</strong> — בודקים את הפעמון.</div></div>
+      <div class="p-4 flex items-start gap-3"><span class="text-2xl">🔍</span><div><strong>חיפוש: <code class="bg-slate-100 px-2 py-0.5 rounded">%מילה%</code></strong> + Enter</div></div>
+      <div class="p-4 flex items-start gap-3"><span class="text-2xl">📋</span><div><strong>Shift+Ctrl לעריכת מספר שורות</strong> בבת אחת</div></div>
+      <div class="p-4 flex items-start gap-3"><span class="text-2xl">📞</span><div><strong>מספר סלולרי = שדה חובה</strong> — הגדר ברירת מחדל בהעדפות</div></div>
+      <div class="p-4 flex items-start gap-3"><span class="text-2xl">💰</span><div><strong>בדיקת יתרות לפני שליחה</strong> — כפתור יזום</div></div>
+      <div class="p-4 flex items-start gap-3"><span class="text-2xl">📎</span><div><strong>נספחים ברמת הדרישה</strong> (Header), לא ברמת השורה</div></div>
+      <div class="p-4 flex items-start gap-3"><span class="text-2xl">🏷️</span><div><strong>ערך תכונה מנתב את הדרישה</strong> — בחר נכון!</div></div>
+    </div>
+    <a href="https://github.com/elad-refoua/ananet-knowledge/blob/main/reference/operational-rules.md" class="inline-block mt-4 text-primary-600 hover:text-primary-700 font-semibold">→ פירוט מלא + עוד 5 כללים</a>
+  </section>
+
+  <!-- Timeline -->
+  <section id="timeline" class="mb-16 bg-white rounded-2xl p-8 border border-slate-200">
+    <h3 class="text-2xl font-bold mb-6 flex items-center gap-2">📅 תאריכים מרכזיים</h3>
+    <div class="space-y-3">
+      <div class="flex items-center gap-4 p-3 bg-green-50 rounded-lg border-r-4 border-green-500">
+        <strong class="text-green-700">27.4.2026</strong>
+        <span>✅ מערכת עננט עלתה לאוויר</span>
+      </div>
+      <div class="flex items-center gap-4 p-3 bg-amber-50 rounded-lg border-r-4 border-amber-500">
+        <strong class="text-amber-700">29.4.2026</strong>
+        <span>⚠️ דדליין אחרון לביטול מלגות לפני תשלום</span>
+      </div>
+      <div class="flex items-center gap-4 p-3 bg-blue-50 rounded-lg border-r-4 border-blue-500">
+        <strong class="text-blue-700">3.5.2026</strong>
+        <span>🔓 פתיחת 5 מודולים נעולים (דוח לחוקר, פספורט, KKMB, יתרת תקציב)</span>
+      </div>
+      <div class="flex items-center gap-4 p-3 bg-slate-50 rounded-lg border-r-4 border-slate-400">
+        <strong class="text-slate-700">תחילת מאי</strong>
+        <span>תשלום מלגות ראשון בפרודקשן</span>
+      </div>
+    </div>
+    <a href="https://github.com/elad-refoua/ananet-knowledge/blob/main/reference/timeline.md" class="inline-block mt-6 text-primary-600 hover:text-primary-700 font-semibold">→ ציר זמן מלא + הדרכות</a>
+  </section>
+
+  <!-- Help -->
+  <section id="help" class="mb-16">
+    <h3 class="text-2xl font-bold mb-6 flex items-center gap-2">🆘 לאן לפנות לפי סוג שאלה</h3>
+    <div class="grid md:grid-cols-2 gap-4">
+      <div class="bg-white p-5 rounded-xl border border-slate-200">
+        <h4 class="font-bold mb-2 text-primary-700">💰 כסף ותקציב</h4>
+        <p class="text-sm text-slate-700">יתרה / סטטוס דרישה → <strong>התחבר לעננט ישירות</strong></p>
+      </div>
+      <div class="bg-white p-5 rounded-xl border border-slate-200">
+        <h4 class="font-bold mb-2 text-primary-700">🔐 התחברות / SSO</h4>
+        <p class="text-sm text-slate-700">לא מצליח להתחבר → <strong>מוקד תקשוב 072-2644999</strong></p>
+      </div>
+      <div class="bg-white p-5 rounded-xl border border-slate-200">
+        <h4 class="font-bold mb-2 text-primary-700">🧪 חומ"ס</h4>
+        <p class="text-sm text-slate-700">פג תוקף הדרכה / חריגה → <strong>hazmat.barnet@biu.ac.il</strong></p>
+      </div>
+      <div class="bg-white p-5 rounded-xl border border-slate-200">
+        <h4 class="font-bold mb-2 text-primary-700">📋 שאלה כללית</h4>
+        <p class="text-sm text-slate-700"><strong>ananet.service@biu.ac.il</strong> או 072-2644999 ext 4999</p>
+      </div>
+    </div>
+    <a href="https://github.com/elad-refoua/ananet-knowledge/blob/main/help/where-to-go.md" class="inline-block mt-4 text-primary-600 hover:text-primary-700 font-semibold">→ מדריך ניתוב מלא</a>
+  </section>
+
+  <!-- Bot -->
+  <section id="bot" class="mb-16 bg-gradient-to-br from-primary-50 to-blue-50 rounded-2xl p-8 border border-primary-200">
+    <h3 class="text-2xl font-bold mb-2 flex items-center gap-2">💬 שאל את הבוט</h3>
+    <p class="text-slate-600 mb-6">בוט שיחה עם גישה לכל המאגר. עונה בכל שפה. מבוסס על Gemini 3.1 Flash.</p>
+    <div id="chat-container" class="bg-white rounded-xl border border-slate-200 overflow-hidden">
+      <div id="chat-messages" class="p-4 h-80 overflow-y-auto space-y-3">
+        <div class="flex gap-3">
+          <div class="text-2xl flex-shrink-0">🤖</div>
+          <div class="bg-slate-100 rounded-xl p-3 max-w-md">
+            <p>שלום! אני בוט עזרה למערכת עננט. שאל אותי כל שאלה — איך מקימים דרישת רכש, מי הקניין של קטגוריה X, מה ההבדל בין יבוא וייצוא, ועוד.</p>
+            <p class="text-xs text-slate-500 mt-2">לשאלות אישיות (יתרת התקציב שלי, סטטוס דרישה ספציפית) — אפנה אותך לערוץ הרשמי.</p>
+          </div>
+        </div>
+      </div>
+      <div class="border-t border-slate-200 p-3 flex gap-2">
+        <input id="chat-input" type="text" placeholder="הקלד שאלה..." class="flex-1 bg-slate-100 border border-slate-200 rounded-lg px-4 py-2 outline-none focus:bg-white focus:border-primary-500">
+        <button id="chat-send" class="bg-primary-600 hover:bg-primary-700 text-white px-5 py-2 rounded-lg font-semibold">שלח</button>
+      </div>
+    </div>
+    <div class="mt-3 text-xs text-slate-500 text-center">
+      💡 הבוט יודע: workflows, קטגוריות, חוקים, Smart Forms, תאריכים, באגים. לא יודע: היתרה שלך, הסטטוס שלך — לאלה יש ערוץ רשמי.
+    </div>
+  </section>
+
+  <!-- Downloads -->
+  <section id="downloads" class="mb-16">
+    <h3 class="text-2xl font-bold mb-6 flex items-center gap-2">📥 הורדת חומרים</h3>
+    <div class="grid md:grid-cols-3 gap-4">
+      <a href="https://github.com/elad-refoua/ananet-knowledge/archive/refs/heads/main.zip" class="bg-white p-6 rounded-xl border border-slate-200 hover:border-primary-400 hover:shadow-md transition">
+        <div class="text-4xl mb-3">📦</div>
+        <h4 class="font-bold mb-1">כל המאגר (ZIP)</h4>
+        <p class="text-sm text-slate-600">כל הקבצים — הרצאות, PDFs, סיכומים, JSONs</p>
+      </a>
+      <a href="https://github.com/elad-refoua/ananet-knowledge/tree/main/lectures" class="bg-white p-6 rounded-xl border border-slate-200 hover:border-primary-400 hover:shadow-md transition">
+        <div class="text-4xl mb-3">🎙️</div>
+        <h4 class="font-bold mb-1">7 הקלטות הדרכה</h4>
+        <p class="text-sm text-slate-600">תמלולים מלאים + סיכומים</p>
+      </a>
+      <a href="https://github.com/elad-refoua/ananet-knowledge/tree/main/pdfs" class="bg-white p-6 rounded-xl border border-slate-200 hover:border-primary-400 hover:shadow-md transition">
+        <div class="text-4xl mb-3">📄</div>
+        <h4 class="font-bold mb-1">40 PDFs רשמיים</h4>
+        <p class="text-sm text-slate-600">כל מדריכי המשתמש המקוריים</p>
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<!-- Footer -->
+<footer class="bg-slate-900 text-slate-300 py-12">
+  <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-3 gap-8">
+    <div>
+      <h4 class="font-bold text-white mb-3">המאגר</h4>
+      <p class="text-sm leading-relaxed">
+        מאגר ידע ציבורי על מערכת עננט. נערך ע"י <strong>אלעד רפואה</strong>, דוקטורנט במעבדה לרגש ויחסים בינאישיים, פרופ' אשכול רפאלי, אוניברסיטת בר-אילן.
+      </p>
+    </div>
+    <div>
+      <h4 class="font-bold text-white mb-3">משאבים רשמיים</h4>
+      <ul class="text-sm space-y-2">
+        <li>📧 <a href="mailto:ananet.service@biu.ac.il" class="hover:text-primary-400">ananet.service@biu.ac.il</a></li>
+        <li>☎️ 072-2644999 ext 4999</li>
+        <li>🤖 <a href="https://bar-ilan-ai-guide.lovable.app" class="hover:text-primary-400">בוט מחלקת רכש (רשמי)</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="font-bold text-white mb-3">צור קשר</h4>
+      <ul class="text-sm space-y-2">
+        <li>📬 <a href="mailto:eladrefoua@gmail.com" class="hover:text-primary-400">eladrefoua@gmail.com</a></li>
+        <li>💻 <a href="https://github.com/elad-refoua/ananet-knowledge" class="hover:text-primary-400">GitHub Repository</a></li>
+        <li>📜 רישיון: CC-BY 4.0</li>
+      </ul>
+    </div>
+  </div>
+  <div class="max-w-6xl mx-auto px-4 mt-10 pt-6 border-t border-slate-700 text-xs text-slate-500 text-center">
+    <p>⚠️ המאגר אינו על אחריות המתחזק. בינה מלאכותית עלולה לטעות. כל מידע ניתן לאימות מול חומרי המקור.</p>
+    <p class="mt-2">חומרי המקור (PDFs, הקלטות) שייכים לאוניברסיטת בר-אילן ומובאים כאן לצרכי לימוד והנגשה.</p>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

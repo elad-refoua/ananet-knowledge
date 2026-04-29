@@ -1,0 +1,35 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "last_updated": "2026-04-27",
+    "license": "CC-BY-4.0"
+  },
+  "events": [
+    {"date": "2020-03", "event": "Ananet project started (during COVID)", "type": "milestone"},
+    {"date": "2026-01-27", "event": "First all-staff announcement", "type": "announcement"},
+    {"date": "2026-02-05", "event": "Kickoff meeting (~700 attendees on Zoom)", "type": "lecture", "lecture_id": "L1"},
+    {"date": "2026-02-10", "event": "Last date for foreign import requisitions in Brnet", "type": "deadline"},
+    {"date": "2026-03-12", "event": "Last date for ALL other requisitions in Brnet", "type": "deadline"},
+    {"date": "2026-03-19", "event": "Brnet shutdown completed", "type": "milestone"},
+    {"date": "2026-04-13", "event": "Lecture 8: Local purchase, catalog, inventory", "type": "lecture", "lecture_id": "L8"},
+    {"date": "2026-04-14", "event": "Lecture 10: Credit card + bank transfer", "type": "lecture", "lecture_id": "L10"},
+    {"date": "2026-04-15", "event": "Lecture 5: Hazardous materials", "type": "lecture", "lecture_id": "L5"},
+    {"date": "2026-04-15", "event": "Lecture 9: Transport + internal (transcription failed)", "type": "lecture", "lecture_id": "L9", "status": "transcription_failed"},
+    {"date": "2026-04-16", "event": "Lecture 7: Expense reimbursement", "type": "lecture", "lecture_id": "L6"},
+    {"date": "2026-04-16", "event": "Lecture 4: Scholarships", "type": "lecture", "lecture_id": "L4"},
+    {"date": "2026-04-19", "event": "Operations team pre-launch briefing", "type": "lecture", "lecture_id": "L7-Ops"},
+    {"date": "2026-04-26", "event": "Original target go-live (delayed by 1 day)", "type": "milestone"},
+    {"date": "2026-04-27", "event": "Ananet GO-LIVE (actual)", "type": "milestone", "highlighted": true},
+    {"date": "2026-04-29", "event": "Last day to cancel scholarships before payment", "type": "deadline", "highlighted": true},
+    {"date": "2026-05-03", "event": "5 locked modules open: Researcher Report, Passport, KKMB, Budget Balance Report", "type": "milestone"},
+    {"date": "2026-05-early", "event": "First scholarship payments in production", "type": "milestone"}
+  ],
+  "locked_modules": [
+    {"name_he": "הדוח לחוקר", "name_en": "Researcher Report", "unlock_date": "2026-05-03", "purpose": "Research budget tracking for researchers"},
+    {"name_he": "פספורט (נסיעות)", "name_en": "Passport (Travel Module)", "unlock_date": "2026-05-03", "purpose": "Travel requests"},
+    {"name_he": "דוח KKMB", "name_en": "KKMB Report", "unlock_date": "2026-05-03", "purpose": "Internal budget reports"},
+    {"name_he": "דוח יתרת תקציב", "name_en": "Budget Balance Report", "unlock_date": "2026-05-03", "purpose": "Budget balance reporting"}
+  ],
+  "production_url": "https://fa-eozj-saasfaprod1.fa.ocs.oraclecloud.com/fscmUI/faces/FuseWelcome",
+  "training_dev2_url": "https://eozj-dev2.fa.ocs.oraclecloud.com/fscmUI/faces/FuseWelcome"
+}

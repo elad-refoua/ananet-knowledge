@@ -1,0 +1,9 @@
+# Cloudflare Pages — redirects
+# https://developers.cloudflare.com/pages/configuration/redirects/
+
+# Pretty URLs for common reference docs
+/workflows /reference/workflows.md 302
+/categories /reference/categories-to-buyers.md 302
+/rules /reference/operational-rules.md 302
+/smart-forms /reference/smart-forms.md 302
+/help /help/where-to-go.md 302
